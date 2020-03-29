@@ -1,0 +1,42 @@
+DECLARE
+  vs_count         number := 0;
+     
+  TYPE RTESTE1 IS RECORD(
+    FIELD1  VARCHAR2(4),
+    FIELD2 VARCHAR(7),
+    FIELD3 NUMBER(17,2)
+    );
+
+  TYPE VTEST1 IS TABLE OF RTESTE1 INDEX BY BINARY_INTEGER;
+  VATEST1 VTEST1;
+
+BEGIN
+  
+
+  VATEST1(0001).FIELD1 := '0101'; VATEST1(0001).FIELD2 := TRIM('123456'); VATEST1(0001).FIELD3 := 100;
+  VATEST1(0002).FIELD1 := '0101'; VATEST1(0002).FIELD2 := TRIM('123456'); VATEST1(0002).FIELD3 := 100;
+  
+  
+for i in 1 .. vatest1.count() Loop
+  
+DBMS_OUTPUT.PUT_LINE (vatest1(i).FIELD3);
+
+
+
+INSERT INTO TABLE1 (
+ A1,
+ A2,
+ A3)
+ VALUES
+ (
+   vateste1(i).FIELD1
+  ,vateste1(i).FIELD2
+  ,vateste1(i).FIELD3
+  );
+ VS_COUNT := VS_COUNT + SQL%ROWCOUNT;
+
+End Loop;
+
+ dbms_output.put_line ( VS_COUNT );
+
+END;

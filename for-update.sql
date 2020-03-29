@@ -1,0 +1,35 @@
+DECLARE
+
+SELECT_1 VARCHAR2(1000) := '';
+CONT_VROWCOUNT  NUMBER:=0;
+CURSOR C1 IS
+
+SELECT 'A' DATA1, '1' DATA2 , '01/01/2020' DATA3, 'ABCD' DATA4 , '1AA' DATA5  FROM DUAL UNION ALL 
+SELECT 'B' DATA1, '2' DATA2 , '01/01/2020' DATA3, 'ABCD' DATA4 , '1BB' DATA5  FROM DUAL UNION ALL
+SELECT 'C' DATA1, '3' DATA2 , '01/01/2020' DATA3, 'ABCD' DATA4 , '1CC' DATA5  FROM DUAL ;   
+
+BEGIN 
+ 
+FOR R1 IN C1 LOOP
+  
+     FOR DATA IN(
+      
+       SELECT * FROM TABLE_X 
+          WHERE 1=1
+            AND FIELD = R1.DATA3                               
+                   
+      )LOOP 
+      DBMS_OUTPUT.PUT_LINE('UPDATE TABLE_1 SET FIELD_1 =  X  WHERE FIELD_2 = ' || ''''|| DATA.FIELD ||'''' || ' ;' );
+      
+      SELECT_1:= 'SELECT * FROM TABLE_1 WHERE FIELD_2 = '||DATA3||';';
+      CONT_VROWCOUNT := CONT_VROWCOUNT +1;
+
+     END LOOP;--DATA
+     
+     DBMS_OUTPUT.PUT_LINE(SELECT_1);
+    
+END LOOP; -- C1
+     DBMS_OUTPUT.PUT_LINE( '--Number of records changed ' || CONT_VROWCOUNT); 
+END;
+
+  
